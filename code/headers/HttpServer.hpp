@@ -17,6 +17,9 @@
 #include <memory>
 #include <string>
 #include <string_view>
+#include <thread>
+
+using namespace std;
 
 namespace argb
 {
@@ -88,6 +91,7 @@ namespace argb
         TcpListener           listener;
         std::atomic<bool>     running{};
         RequestHandlerManager request_handler_manager;
+        jthread hiloConexiones, hiloLectEscr;
 
     public:
 

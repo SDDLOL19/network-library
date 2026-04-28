@@ -4,7 +4,6 @@
 
 #include <HttpServer.hpp>
 #include <iostream>
-#include <thread>
 
 using std::cout;
 using std::endl;
@@ -60,10 +59,16 @@ namespace argb
 
             while (running) 
             {
-                accept_connections  ();
-                transfer_data       ();
+                hiloConexiones = jthread(&HttpServer::accept_connections, this);
+                //accept_connections  ();
+
+                hiloLectEscr = jthread(&HttpServer::transfer_data, this);
+                //transfer_data       ();
+
                 run_handlers        ();
-                dispose_connections ();
+
+                hiloConexiones = jthread(&HttpServer::dispose_connections, this);
+                //dispose_connections ();
 
                 std::this_thread::yield (); 
             }
